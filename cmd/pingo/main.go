@@ -8,6 +8,9 @@ import (
 
 func main() {
 	ip := GetLocalAddr()
+	if ip == nil {
+		log.Fatal("Unable to get local IPv4 address")
+	}
 	fmt.Println(ip)
 }
 
