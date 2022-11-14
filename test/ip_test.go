@@ -22,13 +22,13 @@ func TestNormalSubnet(t *testing.T) {
 
 	gotFirst := addrs[0]
 
-	if gotFirst != first {
+	if gotFirst.String() != first {
 		t.Errorf("the first IP should be %s, got %s instead.", first, gotFirst)
 	}
 
 	gotLast := addrs[size-1]
 
-	if gotLast != last {
+	if gotLast.String() != last {
 		t.Errorf("the last IP should be %s, got %s instead.", last, gotLast)
 	}
 
@@ -49,13 +49,13 @@ func TestBiggerSubnet(t *testing.T) {
 
 	gotFirst := addrs[0]
 
-	if gotFirst != first {
+	if gotFirst.String() != first {
 		t.Errorf("the first IP should be %s, got %s instead.", first, gotFirst)
 	}
 
 	gotLast := addrs[size-1]
 
-	if gotLast != last {
+	if gotLast.String() != last {
 		t.Errorf("the last IP should be %s, got %s instead.", last, gotLast)
 	}
 
@@ -76,13 +76,13 @@ func TestSmallerSubnet(t *testing.T) {
 
 	gotFirst := addrs[0]
 
-	if gotFirst != first {
+	if gotFirst.String() != first {
 		t.Errorf("the first IP should be %s, got %s instead.", first, gotFirst)
 	}
 
 	gotLast := addrs[size-1]
 
-	if gotLast != last {
+	if gotLast.String() != last {
 		t.Errorf("the last IP should be %s, got %s instead.", last, gotLast)
 	}
 

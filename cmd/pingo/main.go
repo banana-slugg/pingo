@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/crims1n/pingo/internal/ip"
+	"github.com/crims1n/pingo/internal/pinger"
 )
 
 func main() {
@@ -13,7 +14,11 @@ func main() {
 		log.Fatal("Unable to get local IPv4 address")
 	}
 
-	res := ip.GetIPRange(ipnet)
-	fmt.Println(res)
+	ips := ip.GetIPRange(ipnet)
+	res := pinger.PingAll(ips)
+
+	for _, v := range res {
+		fmt.Println(v)
+	}
 
 }

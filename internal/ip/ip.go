@@ -1,20 +1,35 @@
 package ip
 
 import (
+	"bytes"
 	"encoding/binary"
 	"log"
 	"math"
 	"net"
+	"sort"
 )
 
-func GetIPRange(ip *net.IPNet) []string {
+func GetIPRangeString(ip *net.IPNet) []string {
+	size := GetSubnetSize(ip)
 	networkAddr := ip.IP.Mask(ip.Mask)
 	addrs := make([]string, 0)
-	size := GetSubnetSize(ip)
 	buffer := make(net.IP, 4)
 	for i := 1; i < int(size); i++ {
 		binary.BigEndian.PutUint32(buffer, uint32(i)|binary.BigEndian.Uint32(networkAddr)) // bitwize or
 		addrs = append(addrs, buffer.String())
+	}
+	return addrs
+}
+
+func GetIPRange(ip *net.IPNet) []net.IP {
+	size := GetSubnetSize(ip)
+	networkAddr := ip.IP.Mask(ip.Mask)
+	addrs := make([]net.IP, 0)
+
+	for i := 1; i < int(size); i++ {
+		buffer := make(net.IP, 4)
+		binary.BigEndian.PutUint32(buffer, uint32(i)|binary.BigEndian.Uint32(networkAddr)) // bitwize or
+		addrs = append(addrs, buffer)
 	}
 	return addrs
 }
@@ -37,4 +52,11 @@ func GetLocalAddr() *net.IPNet {
 		}
 	}
 	return nil
+}
+
+func SortAddrs(addrs []net.IP) []net.IP {
+	sort.Slice(addrs, func(i, j int) bool {
+		return bytes.Compare(addrs[i], addrs[j]) < 0
+	})
+	return addrs
 }
